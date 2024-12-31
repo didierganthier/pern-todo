@@ -5,11 +5,24 @@ const pool = require('./db')
 
 // middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //req.body
 
 // ROUTES //
 
 // create a todo
+app.post('/todos', async (req, res) => {
+    try {
+        const { description } = req.body;
+        const newTodo = await pool.query(
+            "INSERT INTO todo (description) VALUES($1) RETURNING *",
+            [description]
+        );
+
+        res.json(newTodo.rows[0]); 
+    } catch (error) {
+        console.error(error.message)
+    }
+})
 
 // get all todos
 
@@ -19,6 +32,6 @@ app.use(express.json());
 
 // delete a todo 
 
-app.listen(5000, () => {
-    console.log("server has started on port 5000");
+app.listen(3004, () => {
+    console.log("server has started on port 3004");
 })
