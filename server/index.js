@@ -51,8 +51,33 @@ app.get('/todos/:id', async (req, res) => {
 })
 
 // update a todo
+app.put('/todos/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { description } = req.body;
+        const updatedTodo = pool.query(
+            "UPDATE todo SET description = $1 WHERE todo_id = $2",
+            [description, id]
+        );
+        res.json("Todo was updated");
+    } catch (error) {
+        
+    }
+})
 
 // delete a todo 
+app.delete('/todos/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteTodo = pool.query(
+            "DELETE FROM todo WHERE todo_id = $1",
+            [id]
+        );
+        res.json("Todo was deleted")
+    } catch (error) {
+        
+    }
+})
 
 app.listen(3004, () => {
     console.log("server has started on port 3004");
