@@ -16,6 +16,22 @@ const ListTodos = () => {
         }
     }
 
+    const deleteTodo = async (todoId) => {
+        try {
+            const deleteTodo = await fetch(`http://localhost:3004/todos/${todoId}`, {
+                method: 'DELETE'
+            })
+
+            if(deleteTodo.ok) {
+                setTodos(todos.filter((todo) => todo.todo_id !== todoId))
+            } else {
+                console.error(deleteTodo);
+            }
+        } catch (error) {
+            console.error(deleteTodo);
+        }
+    }
+
     useEffect(() => {
         getTodos();
     }, [])
@@ -47,7 +63,7 @@ const ListTodos = () => {
                     </thead>
                     <tbody>
                         {todos.map(todo => (
-                            <tr class="bg-white border-b">
+                            <tr class="bg-white border-b" key={todo.todo_id}>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     {todo.todo_id}
                                 </td>
@@ -56,12 +72,12 @@ const ListTodos = () => {
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     <button>
-                                        <img src='https://cdn-icons-png.flaticon.com/512/2985/2985043.png' className='w-4 h-4'/>
+                                        <img src='https://cdn-icons-png.flaticon.com/512/2985/2985043.png' alt='edit-icon' className='w-4 h-4'/>
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    <button>
-                                        <img src='https://cdn-icons-png.flaticon.com/512/1214/1214428.png' className='w-4 h-4'/>
+                                    <button onClick={() => deleteTodo(todo.todo_id)}>
+                                        <img src='https://cdn-icons-png.flaticon.com/512/1214/1214428.png' alt='trash-icon' className='w-4 h-4'/>
                                     </button>
                                 </td> 
                             </tr>
