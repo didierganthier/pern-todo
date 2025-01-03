@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import EditTodo from './EditTodo';
 
 const ListTodos = () => {
 
@@ -71,9 +72,10 @@ const ListTodos = () => {
                                     {todo.description}
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    <button>
+                                    <EditTodo todo={todo}/>
+                                    {/* <button>
                                         <img src='https://cdn-icons-png.flaticon.com/512/2985/2985043.png' alt='edit-icon' className='w-4 h-4'/>
-                                    </button>
+                                    </button> */}
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     <button onClick={() => deleteTodo(todo.todo_id)}>
